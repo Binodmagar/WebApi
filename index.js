@@ -15,7 +15,7 @@ sequelize
 .then(() => {
 	console.log('Connection success');
 })
-.catch(function (err){
+.catch(function (err){//this means function of error and same as down below
 	console.log(err);
 });
 //.catch(err => {
