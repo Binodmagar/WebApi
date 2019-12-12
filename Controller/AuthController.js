@@ -70,20 +70,45 @@ function passwordChecker(req, res, next){
 
 function jwtTokenGen(req, res,next){
 	//token for each pers
+	//payload used to take token or generate key
 	var myPayload = {
 		username: req.body.username,
 		userLevel: 'superadmin'
 	}
 
 	jwt.sign(myPayload, 'key',{expiresIn:"10h"}, function(err,resultToken){
-		console.log(err);
+	console.log(err);
 	console.log(resultToken);
 	res.json({"userToken": resultToken})
 	})
 	
+} 
+
+function verifyToken(req, res, next){
+	// header: authorization :
+
+	console.log(req.headers.authorization)
+	var token = req.headers.authorization.slice(7,req.headers.authorization.length)
+	//verify token first key token
+	jwt.verify(token, 'key',function(err, result){
+		console.log(err)
+		console.log(result)
+
+		if(result){
+			next();
+		}
+		else{
+			console.log(err)
+			res.json(err)
+			res.json({status: 404, message: "errors"})
+		}
+	})
+
 }
 module.exports = {
 	passwordChecker,
 	validator,
-	jwtTokenGen
+	jwtTokenGen,
+	verifyToken
+
 }
