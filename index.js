@@ -16,6 +16,7 @@ var app = express()
 // console.log(dbConfig.sequelize)
 
 var userModel = require('./Models/userMode.js')
+//for register
 var userController = require('./Controller/userController.js')
 //forlogin
 var authController = require('./Controller/AuthController.js')
@@ -32,6 +33,6 @@ app.post('/register',userController.validator, userController.CheckIfUserExit, u
 app.post('/login',authController.validator, authController.passwordChecker, authController.jwtTokenGen)
 // console.log(req.body);
 
-app.delete('/user/:id',userController.deleteUser)
+app.delete('/user/:id',authController.verifyToken, userController.deleteUser)
 
 app.listen(3003);
