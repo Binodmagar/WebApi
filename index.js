@@ -101,7 +101,35 @@ app.post('/register',userController.validator, userController.CheckIfUserExit, u
 
 
 
-
+/**
+* @swagger
+* /login:
+*  post:
+*   tags:
+*    - tbl_user
+*   description: User login testing
+*   produces:
+*    - application/json
+*   consumes:
+*    - application/x-www-form-urlencoded
+*   parameters:
+*    - name: username
+*      in: formData
+*      type: string
+*      required: true
+*      description: Please provide  username
+*    - name: password
+*      in: formData
+*      type: string
+*      required: true
+*      description: Please provide  password
+*   responses:
+*    201:
+*     description: registered sucessfully
+*    406:
+*     description: username and password required
+*/
+//login route
 //for login
 app.post('/login',authController.validator, authController.passwordChecker, authController.jwtTokenGen)
 // console.log(req.body);
