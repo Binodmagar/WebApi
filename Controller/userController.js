@@ -21,6 +21,7 @@ function validator(req, res, next){
 function CheckIfUserExit(req, res, next){
 	//db --> username user exits 
 	//find one is a function
+	console.log(req.body.username)
 	userModel.user.findOne({
 		where:{username:req.body.username}
 	})
@@ -82,7 +83,7 @@ function deleteUser(req, res, next){
 
 	if(req.params.id === null || req.params.id === undefined){
 		res.status(404);
-		res.json({status:404, message: "id not provide"})
+		res.json({status:404, message: "id not found"})
 	}
 	// req.params.id
 	userModel.user.destroy({
@@ -105,6 +106,25 @@ function deleteUser(req, res, next){
 	})
 }
 
+function updateUser(req, res, next){
+	if(req.params.id === null || req.params.id === undefined){
+		res.status(404);
+		res.json({status: 404, message: "id not found"})
+	}
+
+	userModel.user.update(
+	    {username: req.body.username},
+		{where: req.params.id}
+	)
+	.then(function(result){
+		console.log(result)
+	})
+	.catch(function(err){
+		res.json(err)
+		console.log(err)
+	})
+}
+
 // function imageUpload()
 
-module.exports = {validator, getHash, CheckIfUserExit, actualRegister, deleteUser}
+module.exports = {validator, getHash, CheckIfUserExit, actualRegister, deleteUser,updateUser}
