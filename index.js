@@ -163,3 +163,5 @@ app.delete('/user/:id',authController.verifyToken, userController.deleteUser)
 app.put('/user/:id', userController.updateUser)
 
 app.listen(3004);
+
+module.exports = app ;

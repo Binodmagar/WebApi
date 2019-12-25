@@ -114,14 +114,20 @@ function updateUser(req, res, next){
 
 	userModel.user.update(
 	    {username: req.body.username},
-		{where: req.params.id}
-	)
-	.then(function(result){
-		console.log(result)
+		{where: {
+			id: req.params.id
+		} 
 	})
-	.catch(function(err){
-		res.json(err)
-		console.log(err)
+	.then(function(result){
+		if(result === 0){
+			res.status(500)
+			console.log(result)
+			res.json({status: 500, message: 'couldnot update user'})
+		}
+		else{
+			res.status(200)
+			res.json({status: 200, message: 'update success'})
+		}
 	})
 }
 
