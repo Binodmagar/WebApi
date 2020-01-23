@@ -1,5 +1,10 @@
 var express = require('express')
 var bodyParser = require('body-parser')
+var cors = require('cors')
+//cors policy 
+//express packages cors will be used
+//res.setHeader('Access-Control-Allow-Origin', '*')
+//res.setHeader('Access-Control-Allow-Origin', 'PUT,POST')
 
 //for image
 var multer = require('multer');
@@ -41,6 +46,7 @@ var swaggerSpecs = swaggerJSDOC(swaggerOption);
 
 
 var app = express() 
+app.use(cors());
 //to see that we see in route
 app.use('/api-docs',swaggerUI.serve,swaggerUI.setup(swaggerSpecs));
 
@@ -59,7 +65,8 @@ var userController = require('./Controller/userController.js')
 var authController = require('./Controller/AuthController.js')
 
 
-app.use(bodyParser.urlencoded({extended: true }));
+app.use(bodyParser.urlencoded({extended: true })); //postman data url encoded
+app.use(bodyParser.json());//json object data
 
 
 
@@ -96,7 +103,7 @@ app.use(bodyParser.urlencoded({extended: true }));
 */
 
 //for register
-app.post('/register',userController.validator, userController.CheckIfUserExit, userController.getHash, userController.actualRegister)//defining route
+app.post('/registration',userController.validator, userController.CheckIfUserExit, userController.getHash, userController.actualRegister)//defining route
 // console.log(req.body);
 
 

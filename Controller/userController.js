@@ -53,7 +53,8 @@ function getHash(req, res, next){
 			// res.json(hash)
 
 		}else if(err){
-			res.json({status:500, message: "couldnot hash password"})
+			
+			res.json({status:400, message: "couldnot hash password"})
 		}
 	
 });
@@ -70,7 +71,8 @@ function actualRegister(req, res, next){
 	})
 	.then(function(result){
 		console.log(result)
-		res.json(result);
+		// res.json(result);
+		res.status(201)
 		res.json({status:201, message: "success"})
 	})
 	.catch(function(err){
